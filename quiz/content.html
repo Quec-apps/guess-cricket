@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content</title>
+    <script src="../res/script/jquery.min.js"></script>
+    <style>
+        @font-face {
+            font-family: Raleway;
+            src: url(../res/fonts/Rubik-Medium.ttf);
+        }
+
+        @font-face {
+            font-family: Rubik;
+            src: url(../res/fonts/Roboto-Medium.ttf);
+        }
+
+        body,
+        html {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            font-family: Rubik;
+            user-select: none;
+            color: #1bb7ac;
+            background-color: #ecfcfb;
+            transition: all 0.4s ease-in;
+        }
+
+        .top {
+            height: 10vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            transform: scale(2);
+            opacity: 0;
+            transition: all .3s ease-in;
+        }
+
+        .back-img {
+	        width: 30px;
+	        height: 30px;
+	        transform: scale(1.2);
+	        background-color: #1db7ad;
+	        border-radius: 15px;
+	        padding: 7px;
+	        opacity: 0;
+        } .back-img:active {
+	        transform: scale(.9)!important;
+        }
+
+        .lev-bg {
+            padding-left: 10px;
+            font-size: large;
+        }
+
+        .mid {
+            height: 90vh;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            transform: scale(2);
+            opacity: 0;
+            transition: all .3s ease-in;
+        }
+
+        .type {
+            width: 100vw;
+            max-width: 1000px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .type-txt {
+            text-align: center;
+            font-size: large;
+            text-transform: capitalize;
+        }
+
+        .ques-bg {
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            font-size: larger;
+            font-family: Raleway;
+            color: #000302;
+        }
+
+        .option-bg {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-content: space-around;
+        }
+
+        .btn {
+            width: 90vw;
+            margin-bottom: 5px;
+            max-width: 600px;
+            height: fit-content;
+            padding: 15px 0;
+            background-color: #c0f7f4;
+            border: solid 3px #9bcac5;
+            border-radius: 10px;
+            box-shadow: 1px 1px 4px rgba(0 0 0, .5);
+            text-align: center;
+            color: #1bb7ac;
+            font-size: larger;
+        }
+
+        .nav-btn {
+            width: 40vw;
+        }
+
+        .btn:active {
+            opacity: .7 !important;
+        }
+
+        .btm {
+            height: 10vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            transform-origin: center;
+            transform: scale(2);
+            opacity: 0;
+            transition: all .3s ease-in;
+        }
+
+        .win-bg {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0; left: 0;
+            background-color: rgba(0, 0, 0, .7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s ease-in;
+        }
+        .new-highscore {
+            position: absolute;
+            top: 0; left: 0;
+            background-color: aliceblue;
+            border-radius: 10px;
+            padding: 5px 10px;
+            transform: rotate(324deg) translate(-28px, -2px);
+            animation: new 1s ease-in-out infinite;
+            display: none;
+        }
+        @keyframes new {
+            0% {transform: rotate(324deg) translate(-28px, -2px) scale(.7);}
+            50% {transform: rotate(324deg) translate(-28px, -2px) scale(1);}
+            100% {transform: rotate(324deg) translate(-28px, -2px) scale(.7);}
+        }
+        .win-ct-bg {
+            width: 90vw;
+            border-radius: 15px;
+            padding: 20px 0;
+            background-color: #ecfcfb;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            animation: win-ct .2s cubic-bezier(0.55, 0.09, 0.68, 0.53) 1;
+        }
+
+        @keyframes win-ct {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .g-o-ct-bg {
+            width: 100%;
+	        display: flex;
+	        flex-wrap: nowrap;
+        }
+
+        .button {
+            width: 50px;
+            height: 50px;
+            padding: 10px;
+            background-color: #1db7ad;
+            border-radius: 20px;
+            text-align: center;
+            margin: 0 auto;
+            margin-top: 15px;
+        } .button:active {
+	        transform: scale(.9);
+        }
+
+        .home, .retry {
+            background-color: #1bb7ac;
+            color: white;
+            border: none;
+            border-radius: 25px;
+        }
+
+        .crct-txt {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: xx-large;
+            text-align: center;
+        }
+        .win-ct-sub {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding-bottom: 25px;
+        }
+        .score-txt {
+            font-size: larger;
+        }
+
+        .report-bg {
+            display: flex;
+            align-items: center;
+            color: #d72828;
+        } .report-bg:active {
+            opacity: .3;
+        }
+        .error-img {
+            margin-left: 4px;
+            width: 20px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <img src="../res/image/back.webp" alt="back" class="back-img">
+        <div class="lev-bg">Score: <span class="score"></span> | Highscore: <span class="highscore"></span></div>
+        <div class="report-bg">
+            Report
+            <img src="../res/image/error.png" class="error-img">
+        </div>
+    </div>
+    <div class="mid">
+        <div class="type">
+            <div class="type-txt"></div>
+        </div>
+        <div class="ques-bg"></div>
+        <div class="option-bg">
+            <div class="btn" id="ans"></div>
+            <div class="btn noans" id="noans1"></div>
+            <div class="btn noans" id="noans2"></div>
+            <div class="btn noans" id="noans3"></div>
+        </div>
+    </div>
+    <div class="win-bg">
+        <div class="win-ct-bg">
+            <div class="new-highscore">New Highscore</div>
+            <div class="crct-txt">Game Over</div>
+            <div class="win-ct-sub">
+                <div class="score-txt">Score: <span class="score"></span></div>
+                <div class="score-txt">Highscore: <span class="highscore"></span></div>
+            </div>
+            <div class="g-o-ct-bg">
+				<img src="../res/image/home.webp" class="button home">
+				<img src="../res/image/retry.webp" class="button retry">
+			</div>
+        </div>
+    </div>
+    <audio src="../res/audio/correct.mp3" id="correct-aud"></audio>
+    <audio src="../res/audio/wrong.mp3" id="wrong-aud"></audio>
+    <audio src="../res/audio/button.mp3" id="button-aud"></audio>
+    <script src="res/quiz.js"></script>
+    <script>
+        setTimeout(() => { $(".top, .back-img").css({ transform: 'scale(1)', opacity: '1' }); }, 100);
+        setTimeout(() => { $(".mid").css({ transform: 'scale(1)', opacity: '1' }); }, 200);
+        setTimeout(() => { $(".btm").css({ transform: 'scale(1)', opacity: '1' }); }, 300);
+
+        function Outro() {
+            setTimeout(() => { $(".top, .win-bg").css({ transform: 'scale(2)', opacity: '0' }); }, 100);
+            setTimeout(() => { $(".mid").css({ transform: 'scale(2)', opacity: '0' }); }, 200);
+            setTimeout(() => { $(".btm").css({ transform: 'scale(2)', opacity: '0' }); }, 300);
+        }
+
+        level = localStorage.quizLevel;
+        openedLevel = level;
+        oldLevel = 0;
+        score = 0;
+        highscore = localStorage.quizHighscore;
+
+        canAns = true;
+
+        function Append() {
+            $(".score").text(score);
+            $(".highscore").text(highscore);
+            shuffledLevel = Math.floor(Math.random() * quizLevelTotal) + 1;
+            console.log('shuffledLevel', shuffledLevel)
+            if (shuffledLevel == oldLevel) {
+                shuffledLevel = Math.floor(Math.random() * quizLevelTotal) + 1;
+            }
+            oldLevel = shuffledLevel;
+            $(".ques-bg").text(window["q" + shuffledLevel]);
+
+            $("#ans").text(window["ans" + shuffledLevel]);
+            $("#noans1").text(window["noans1" + shuffledLevel]);
+            $("#noans2").text(window["noans2" + shuffledLevel]);
+            $("#noans3").text(window["noans3" + shuffledLevel]);
+            $("#level").text(level);
+            $("#totalLevel").text(quizLevelTotal);
+
+            $(function () {
+                var parent = $(".option-bg");
+                var divs = parent.children();
+                while (divs.length) {
+                    parent.append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
+                }
+            });
+
+            $("#ans, .noans").css({ backgroundColor: '#c0f7f4', color: '#1bb7ac' });
+
+            canAns = true;
+        }
+        Append()
+
+        function CheckInter() {
+            if (inter > 5) {
+                inter =1;
+                localStorage.inter=1;
+                parent.location='https://inter';
+            }
+        }
+
+        inter = parseInt(localStorage.inter);
+        $("#ans").click(function () {
+            if (!canAns)
+                return
+            
+            canAns = false;
+            inter++;
+            CheckInter();
+            document.getElementById('correct-aud').play();
+            console.log("Correct!")
+            $("#ans").css({ backgroundColor: 'green', color: 'white' });
+            score++;
+            setTimeout(() => {
+                Append();
+            }, 700);
+        });
+        $(".noans").click(function () {
+            if (!canAns)
+                return
+            
+            canAns = false;
+            inter++;
+            CheckInter();
+            document.getElementById('wrong-aud').play();
+            $(this).css({ backgroundColor: 'red', color: 'white' });
+            GameOver();
+        });
+
+        function GameOver() {
+            $(".win-bg").css({display:'flex'});
+            console.log('game over');
+            if (score > highscore) {
+                $(".new-highscore").fadeIn(0);
+                localStorage.quizHighscore = score;
+                $(".highscore").text(score);
+                console.log('new highscore');   
+            }
+        }
+
+        $(".back-img, .home").click(function() {
+            Outro();
+            setTimeout(() => {
+                window.history.back();
+            }, 500);
+        });
+        $(".retry").click(function() {
+            Outro();
+            setTimeout(() => {
+                location.reload();
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>
